@@ -227,4 +227,3 @@ error(char *fmt, ...)
 	/* threadexitsall(buf); */
 	abort();
 }
-
