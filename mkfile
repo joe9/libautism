@@ -10,13 +10,6 @@ OFILES=\
 	fget.$O \
 
 HFILES=/sys/include/$P.h
-
-UPDATE=\
-	mkfile\
-	$HFILES\
-	${OFILES:%.$O=%.c}\
-	${LIB:/$objtype/%=/386/%}\
-
 </sys/src/cmd/mksyslib
 
 install:V:	$LIB
@@ -25,9 +18,6 @@ install:V:	$LIB
 
 uninstall:V:
 	rm -f /$objtype/lib/lib$P.a /sys/include/$P.h
-
-clean:V:
-	rm -f *.[$OS] [$OS].* $LIB
 
 $O.%:	%.$O $OFILES $LIB $TESTLIB
 	$LD $LDFLAGS -o $target $prereq
