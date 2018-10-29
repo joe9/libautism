@@ -31,5 +31,11 @@ extern	ulong	estrtoul(char*, char**, int);
 extern	vlong	estrtoll(char*, char**, int);
 extern	uvlong	estrtoull(char*, char**, int);
 
+extern 	int	esnprint(char *buf, int sz, const char *fmt, ...);
+extern	char*	eseprint(char *buf, char *ebuf, const char *fmt, ...);
+
 extern	void*	fget(int, ulong, int*);
 extern	long	fdcp(int, int, ulong, vlong, vlong*);
+
+/* string functions */
+extern	String*	s_smprint(String * str, char *fmt, ...);
