@@ -1,6 +1,7 @@
 #include <u.h>
 #include <libc.h>
-#include <autism.h>
+
+#include "autism.h"
 
 long
 fdcp(int fd, int ofd, ulong bs, vlong bn, vlong *bw)

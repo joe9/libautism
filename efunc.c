@@ -3,6 +3,22 @@
 
 #include "autism.h"
 
+void
+error(char *fmt, ...)
+{
+	int n;
+	va_list arg;
+	char buf[1024] = "";
+
+	va_start(arg, fmt);
+	n = vseprint(buf, buf + sizeof buf, fmt, arg) - buf;
+	va_end(arg);
+	write(2, buf, n);
+	write(2, "\n", 1);
+	/* threadexitsall(buf); */
+	abort();
+}
+
 int
 erfork(int flags)
 {
@@ -14,13 +30,12 @@ erfork(int flags)
 
 
 void*
-emalloc(ulong sz)
+emallocz(ulong sz)
 {
 	void *v;
 
-	if((v = malloc(sz)) == nil)
-		sysfatal("emalloc: %r");
-	memset(v, 0, sz);
+	if((v = mallocz(sz, 1)) == nil)
+		error("emalloc: %r");
 
 	setmalloctag(v, getcallerpc(&sz));
 	return v;
@@ -47,7 +62,7 @@ estrdup(char *s)
 
 	p = strdup(s);
 	if(p == nil)
-		sysfatal("estrdup: %r");
+		error("estrdup: %r");
 	setmalloctag(p, getcallerpc(&s));
 	return p;
 }

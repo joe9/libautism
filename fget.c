@@ -1,6 +1,7 @@
 #include <u.h>
 #include <libc.h>
-#include <autism.h>
+
+#include "autism.h"
 
 void*
 fget(int fd, ulong bs, int *p)

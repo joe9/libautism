@@ -1,5 +1,14 @@
-#pragma src /sys/src/libautism
+#pragma src /sys/src/libautism # this is wrong, need to fix it
 #pragma lib "libautism.a"
+
+enum Bool {
+	False = 0,
+	True = 1
+};
+
+typedef enum Bool Bool;
+
+extern	void	error(char *fmt, ...);
 
 extern	int	erfork(int);
 extern	void*	emalloc(ulong);
