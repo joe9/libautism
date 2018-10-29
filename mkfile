@@ -26,9 +26,6 @@ install:V:	$LIB
 uninstall:V:
 	rm -f /$objtype/lib/lib$P.a /sys/include/$P.h
 
-nuke:V:
-	mk uninstall
-
 clean:V:
 	rm -f *.[$OS] [$OS].* $LIB
 
