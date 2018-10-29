@@ -4,22 +4,6 @@
 
 #include "autism.h"
 
-void
-error(char *fmt, ...)
-{
-	int n;
-	va_list arg;
-	char buf[1024] = "";
-
-	va_start(arg, fmt);
-	n = vseprint(buf, buf + sizeof buf, fmt, arg) - buf;
-	va_end(arg);
-	write(2, buf, n);
-	write(2, "\n", 1);
-	/* threadexitsall(buf); */
-	abort();
-}
-
 int
 erfork(int flags)
 {
@@ -190,3 +174,57 @@ estrtoull(char *as, char **aas, int base)
 
 	return n;
 }
+
+/* below utilities from acme/wiki/src/util.c */
+
+char *
+estrstrdup(char *s, char *t)
+{
+	char *u = emalloc(strlen(s) + strlen(t) + 1);
+
+	strcpy(u, s);
+	strcat(u, t);
+	return u;
+}
+
+char *
+eappend(char *s, char *sep, char *t)
+{
+	char *u;
+
+	if(t == nil)
+		u = estrstrdup(s, sep);
+	else {
+		u = emalloc(strlen(s) + strlen(sep) + strlen(t) + 1);
+		strcpy(u, s);
+		strcat(u, sep);
+		strcat(u, t);
+	}
+	free(s);
+	return u;
+}
+
+char *
+egrow(char *s, char *sep, char *t)
+{
+	s = eappend(s, sep, t);
+	free(t);
+	return s;
+}
+
+void
+error(char *fmt, ...)
+{
+	int n;
+	va_list arg;
+	char buf[1024] = "";
+
+	va_start(arg, fmt);
+	n = vseprint(buf, buf + sizeof buf, fmt, arg) - buf;
+	va_end(arg);
+	write(2, buf, n);
+	write(2, "\n", 1);
+	/* threadexitsall(buf); */
+	abort();
+}
+

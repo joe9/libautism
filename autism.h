@@ -31,6 +31,7 @@ extern	ulong	estrtoul(char*, char**, int);
 extern	vlong	estrtoll(char*, char**, int);
 extern	uvlong	estrtoull(char*, char**, int);
 
+/* these 2 from spew of #cat-v */
 extern 	int	esnprint(char *buf, int sz, const char *fmt, ...);
 extern	char*	eseprint(char *buf, char *ebuf, const char *fmt, ...);
 
@@ -39,3 +40,9 @@ extern	long	fdcp(int, int, ulong, vlong, vlong*);
 
 /* string functions */
 extern	String*	s_smprint(String * str, char *fmt, ...);
+
+/* below utilities from acme/wiki/src/util.c */
+char *estrstrdup(char *s, char *t);
+char *eappend(char *s, char *sep, char *t);
+char *egrow(char *s, char *sep, char *t);
+void error(char *fmt, ...);
