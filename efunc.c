@@ -15,7 +15,7 @@ erfork(int flags)
 
 
 void*
-emallocz(ulong sz)
+emalloc(ulong sz)
 {
 	void *v;
 

@@ -8,6 +8,7 @@ OFILES=\
 	sfunc.$O \
 	fdcp.$O \
 	fget.$O \
+	Bgetline.$O \
 
 HFILES=/sys/include/$P.h
 </sys/src/cmd/mksyslib

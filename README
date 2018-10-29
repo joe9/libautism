@@ -8,4 +8,31 @@ post...
 changed mkfile to match mischief's libtheme mkfile
 	http://contrib.9front.org/mischief/sys/src/libtheme/mkfile
 
+emalloc and not emallocz
+<BurnZeZ> The first problem I see is emallocz  [14:48]
+<BurnZeZ> emallocz is sort of pointless  [14:50]
+<BurnZeZ> The reason is that emalloc() is well known to set the allocated memory to 0s
+<joe9> Thanks for looking at it.
+<BurnZeZ> It would probably be okay to call mallocz() inside it, though
+<joe9> emalloc is using memset anyway.
+<joe9> ok, I will rename it back to emalloc.  [14:51]
+<joe9> makes sense.
+<BurnZeZ> I can’t remember why I used memset instead of mallocz
+<BurnZeZ> It might have just been to avoid pulling in mallocz() unnecessarily in the
+          resulting binary  [14:52]
+<BurnZeZ> So literally autism
 
+extern usage
+<joe9> another thing I noticed is that all the functions are defined using
+       extern. With the system libraries, I do not see extern being used.
+<BurnZeZ> It might get pulled in by random stuff anyway
+<BurnZeZ> Hmm
+<BurnZeZ> Ah, yeah  [14:53]
+<BurnZeZ> That’s actually a feature
+<BurnZeZ> It’s so the function definitions can be replaced with something in your own
+          code
+<BurnZeZ> For example, maybe you want to debug some specific call, so you just
+          re-define the function in your code  [14:54]
+<BurnZeZ> Then insert error checking/handling
+<joe9> cool, Thanks.  [14:55]
+<BurnZeZ> Some stuff does do the extern thing though

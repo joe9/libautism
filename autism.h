@@ -8,7 +8,46 @@ enum Bool {
 
 typedef enum Bool Bool;
 
-extern	void	error(char *fmt, ...);
+/* got these codes from
+   ~/dev/apps/plan9/plan9front/sys/src/cmd/postscript/posttek/posttek.h */
+#define NUL '\000'
+#define SOH '\001'
+#define STX '\002'
+#define ETX '\003'
+#define EOT '\004'
+#define ENQ '\005'
+#define ACK '\006'
+#define BEL '\007'
+#define BS  '\010'
+#define HT  '\011'
+#define NL  '\012'
+#define VT  '\013'
+#define FF  '\014'
+#define CR  '\015'
+#define SO  '\016'
+#define SI  '\017'
+#define DLE '\020'
+#define DC1 '\021'
+#define DC2 '\022'
+#define DC3 '\023'
+#define DC4 '\024'
+#define NAK '\025'
+#define SYN '\026'
+#define ETB '\027'
+#define CAN '\030'
+#define EM  '\031'
+#define SUB '\032'
+#define ESC '\033'
+#define FS  '\034'
+#define GS  '\035'
+#define RS  '\036'
+#define US  '\037'
+#define DEL '\177'
+
+enum {
+	Kilo = 1024 * sizeof(uchar),
+	Mega = Kilo * Kilo,
+};
 
 extern	int	erfork(int);
 extern	void*	emalloc(ulong);
@@ -39,10 +78,13 @@ extern	void*	fget(int, ulong, int*);
 extern	long	fdcp(int, int, ulong, vlong, vlong*);
 
 /* string functions */
-extern	String*	s_smprint(String * str, char *fmt, ...);
+String*	s_smprint(String * str, char *fmt, ...);
 
 /* below utilities from acme/wiki/src/util.c */
 char *estrstrdup(char *s, char *t);
 char *eappend(char *s, char *sep, char *t);
 char *egrow(char *s, char *sep, char *t);
 void error(char *fmt, ...);
+
+/* check grid/testdebug.c for details on why this is the best */
+#define D if (debug == 0) {} else fprint
