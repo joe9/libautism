@@ -1,0 +1,11 @@
+
+built upon BurnZeZ's libautism
+
+; srv tcp!feline.systems!1336 burnzez /n/burnzez
+post...
+; cd /n/burnzez
+
+changed mkfile to match mischief's libtheme mkfile
+	http://contrib.9front.org/mischief/sys/src/libtheme/mkfile
+
+
