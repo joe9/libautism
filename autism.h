@@ -1,4 +1,3 @@
-#pragma src /sys/src/libautism # this is wrong, need to fix it
 #pragma lib "libautism.a"
 
 enum Bool {
