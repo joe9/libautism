@@ -37,9 +37,7 @@ extern usage
 <joe9> cool, Thanks.  [14:55]
 <BurnZeZ> Some stuff does do the extern thing though
 
-
 comments of BurnZeZ
-
 <joe9> I had some changes to  https://github.com/joe9/libautism
 <joe9> hope it does not upset you.
 <BurnZeZ> The first problem I see is emallocz  [14:48]
@@ -134,7 +132,6 @@ comments of BurnZeZ
 <BurnZeZ> Also things like eopen()
 <BurnZeZ> They’re useful during arg handling on program startup
 <BurnZeZ> Where abort() doesn’t make much sense, because we know it was just bad args
-                                                                                [15:25]
 <BurnZeZ> I mentioned bio(2) earlier because it solves this in a funny way
 <BurnZeZ> It has this function, Blethal()
 <BurnZeZ> Basically, you call it, and it sets the error function to whatever you
