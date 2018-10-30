@@ -1,6 +1,7 @@
 #include <u.h>
 #include <libc.h>
 #include <String.h>
+#include <bio.h>
 
 #include "autism.h"
 
@@ -226,4 +227,76 @@ error(char *fmt, ...)
 	write(2, "\n", 1);
 	/* threadexitsall(buf); */
 	abort();
+}
+
+/* from spew of #cat-v
+   usage of esnprintf:
+static size_t
+fmtGuardRecursive(char *buf, size_t sz, Node *g, struct GuardFmt *gfmt)
+{
+    size_t r;
+
+    if (g == NULL) return 0;
+
+    switch(g->type) {
+    default:
+	abort();    // Impossible type for a guard node.
+    case TSYM:
+	r  = fmtPrintf(buf, sz, "this->%L(evt, data, %E, %E)", g->sym, gfmt->src, gfmt->dst);
+	break;
+    case TAND:
+	r  = fmtGuardRecursive(buf,   sz,   g->left, gfmt);
+	r += esnprintf(buf+r, sz-r, " && ");
+	r += fmtGuardRecursive(buf+r, sz-r, g->right, gfmt);
+	break;
+    case TOR:
+	r  = fmtGuardRecursive(buf,   sz,   g->left, gfmt);
+	r += esnprintf(buf+r, sz-r, " || ");
+	r += fmtGuardRecursive(buf+r, sz-r, g->right, gfmt);
+	break;
+    case TPAREN:
+	r  = esnprintf(buf,   sz,   "(");
+	r += fmtGuardRecursive(buf+r, sz-r, g->left, gfmt);
+	r += esnprintf(buf+r, sz-r, ")");
+	break;
+    case TNOT:
+	r  = esnprintf(buf,   sz,   "!" );
+	r += fmtGuardRecursive(buf+r, sz-r, g->left, gfmt);
+	break;
+    }
+    return r;
+}
+ */
+int
+esnprint(char *buf, int sz, const char *fmt, ...)
+{
+	int r;
+	va_list va;
+
+	if(sz <= 0)
+		error("esnprint: buf too small, invalid size is %d", sz);
+	va_start(va, fmt);
+	r = vsnprint(buf, sz, fmt, va);
+	va_end(va);
+	if(r >= sz)
+		error("esnprint: buf too small, size is %d need %d", sz,
+		      r);
+	return r;
+}
+
+char *
+eseprint(char *buf, char *ebuf, const char *fmt, ...)
+{
+	char *r;
+	va_list va;
+
+	if(buf >= ebuf)
+		error("esnprint: buf too small, start=%p, end=%p", buf,
+		      ebuf);
+	va_start(va, fmt);
+	r = vseprint(buf, ebuf, fmt, va);
+	va_end(va);
+	if(r >= ebuf)
+		error("esnprint: buf too small, start=%p, end=%p", buf, r);
+	return r;
 }

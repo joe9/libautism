@@ -70,12 +70,12 @@ extern	ulong	estrtoul(char*, char**, int);
 extern	vlong	estrtoll(char*, char**, int);
 extern	uvlong	estrtoull(char*, char**, int);
 
-/* these 2 from spew of #cat-v */
-extern 	int	esnprint(char *buf, int sz, const char *fmt, ...);
-extern	char*	eseprint(char *buf, char *ebuf, const char *fmt, ...);
-
 extern	void*	fget(int, ulong, int*);
 extern	long	fdcp(int, int, ulong, vlong, vlong*);
+
+/* these 2 from spew of #cat-v */
+int	esnprint(char *buf, int sz, const char *fmt, ...);
+char*	eseprint(char *buf, char *ebuf, const char *fmt, ...);
 
 /* string functions */
 String*	s_smprint(String * str, char *fmt, ...);
@@ -88,3 +88,5 @@ void error(char *fmt, ...);
 
 /* check grid/testdebug.c for details on why this is the best */
 #define D if (debug == 0) {} else fprint
+
+char * Bgetline(int debug, Biobufhdr * b, int *size);

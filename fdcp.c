@@ -1,6 +1,7 @@
 #include <u.h>
 #include <libc.h>
 #include <String.h>
+#include <bio.h>
 
 #include "autism.h"
 

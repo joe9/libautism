@@ -36,3 +36,121 @@ extern usage
 <BurnZeZ> Then insert error checking/handling
 <joe9> cool, Thanks.  [14:55]
 <BurnZeZ> Some stuff does do the extern thing though
+
+
+comments of BurnZeZ
+
+<joe9> I had some changes to  https://github.com/joe9/libautism
+<joe9> hope it does not upset you.
+<BurnZeZ> The first problem I see is emallocz  [14:48]
+<BurnZeZ> emallocz is sort of pointless  [14:50]
+<BurnZeZ> The reason is that emalloc() is well known to set the allocated memory to 0s
+<joe9> Thanks for looking at it.
+<BurnZeZ> It would probably be okay to call mallocz() inside it, though
+<joe9> emalloc is using memset anyway.
+<joe9> ok, I will rename it back to emalloc.  [14:51]
+<joe9> makes sense.
+<BurnZeZ> I can’t remember why I used memset instead of mallocz
+<BurnZeZ> It might have just been to avoid pulling in mallocz() unnecessarily in the
+          resulting binary  [14:52]
+<BurnZeZ> So literally autism
+<joe9> another thing I noticed is that all the functions are defined using
+       extern. With the system libraries, I do not see extern being used.
+<BurnZeZ> It might get pulled in by random stuff anyway
+<BurnZeZ> Hmm
+<BurnZeZ> Ah, yeah  [14:53]
+<BurnZeZ> That’s actually a feature
+<BurnZeZ> It’s so the function definitions can be replaced with something in your own
+          code
+<BurnZeZ> For example, maybe you want to debug some specific call, so you just
+          re-define the function in your code  [14:54]
+<BurnZeZ> Then insert error checking/handling
+<joe9> cool, Thanks.  [14:55]
+<BurnZeZ> Some stuff does do the extern thing though
+<BurnZeZ> Mostly I think of libc the pool allocation stuff  [14:56]
+<BurnZeZ> and the pool *
+<BurnZeZ> estrstrdup is sort of interesting, but I can’t think of a case where I would
+          use it
+<BurnZeZ> Have you used it in something?
+<joe9> I think I wanted to and found it interesting, but, ended up doing something
+       else.  [14:57]
+<joe9> i left it there just in case it might prove useful.
+<BurnZeZ> One thing that is less obvious  [14:58]
+<BurnZeZ> For all the efunctions I wrote, they perfectly handle invalid input
+<BurnZeZ> This is not very obvious
+<BurnZeZ> They handle properly if nil is passed in places where it shouldn’t, I THINK
+<BurnZeZ> I need to verify this
+<BurnZeZ> I remember checking the libc functions as I wrote them efunctions, to make
+          sure things like nil could be passed on and would be handled and reported
+          properly  [15:00]
+<BurnZeZ> s/them/the/
+<BurnZeZ> I tried to avoid duplicating code that makes sure arguments are valid
+                                                                                [15:01]
+<BurnZeZ> Ah, seems I was wrong  [15:02]
+<BurnZeZ> Looks like I did the opposite :^)  [15:03]
+<BurnZeZ> Literally no checking if the arguments are valid
+<BurnZeZ> I probably did the other thing originally, then decided it would make the
+          code unnecessarily unclear
+<BurnZeZ> eappend() is a bit weird in that it calls free(s)  [15:05]
+<BurnZeZ> If we know that ‘s’ is pointing to memory we allocated, we could call
+          realloc() set to the size of newly resulting string  [15:07]
+<joe9> ok, will address it. Thanks.  [15:09]
+<BurnZeZ> The benefit with that is that if we have other pointers set to s, we don’t
+          need to update them
+<BurnZeZ> Also no unnecessary copying  [15:10]
+<BurnZeZ> The error() thing is something I considered  [15:11]
+<joe9> I like abort() as it gives me a stack trace later.  [15:12]
+<BurnZeZ> Yeah
+<BurnZeZ> That was a change I had yet to make
+<BurnZeZ> I hadn’t done it yet because I wasn’t sure of the best way to do it  [15:13]
+<BurnZeZ> bio(2) actually has a similar thing
+<BurnZeZ> /sys/src/libbio/blethal.c:/^Berror/  [15:14]
+<BurnZeZ> bio(2)’s Biobuf struct is literally this  [15:15]
+<BurnZeZ> struct	Biobuf  [15:16]
+<BurnZeZ> {
+<BurnZeZ> 	Biobufhdr;
+<BurnZeZ> 	uchar	b[Bungetsize+Bsize];
+<BurnZeZ> };
+<BurnZeZ> b being a buffer
+<BurnZeZ> struct Biobufhdr contains this
+<BurnZeZ> 	void	(*errorf)(char *);	/* called on error if not nil */
+<BurnZeZ> So you can set an error function to call, on a per-Biobuf basis
+<BurnZeZ> It’s pretty neat  [15:17]
+<BurnZeZ> What I was going to do was having libautism functions call some error
+          function that resolves to sysfatal() by default  [15:18]
+<joe9> I have tried that. but, did not find it much useful. I prefer abort() over it.
+<BurnZeZ> s/having/have/
+<BurnZeZ> “by default”
+<BurnZeZ> I’ll show you why
+<BurnZeZ> Oh, actually  [15:19]
+<BurnZeZ> Since you already know where my code is
+<BurnZeZ> Check out src/ucmd/scope.c  [15:20]
+<BurnZeZ> Inside ARGBEGIN{ }ARGEND;  [15:21]
+<joe9> I could not find a src dir http://ix.io/1qpc  [15:23]
+<joe9> got it. sorry
+<BurnZeZ> ucmd is “unfinished commands”
+<BurnZeZ> Several of the things are useful, but most of them are not
+<joe9> got it. Thanks.  [15:24]
+<BurnZeZ> Also things like eopen()
+<BurnZeZ> They’re useful during arg handling on program startup
+<BurnZeZ> Where abort() doesn’t make much sense, because we know it was just bad args
+                                                                                [15:25]
+<BurnZeZ> I mentioned bio(2) earlier because it solves this in a funny way
+<BurnZeZ> It has this function, Blethal()
+<BurnZeZ> Basically, you call it, and it sets the error function to whatever you
+          specify  [15:26]
+<joe9> yes, I agree with you.
+<BurnZeZ> That sort of thing would probably be perfect here
+<joe9> this is pretty cool : TARG=`{echo *.c | sed 's/\.c//g; s/ /\n/g' | grep -v
+       $NOMK}
+<BurnZeZ> Haha  [15:27]
+<joe9> I have been having long list of files.
+<BurnZeZ> Yeah, mk is weird
+<BurnZeZ> You can’t use globbing like
+<BurnZeZ> TARG=*.c
+<BurnZeZ> But you can use `{} to call rc and do it  [15:28]
+<BurnZeZ> *.c would be wrong in this case though
+<BurnZeZ> term% grep '^LIBS' /sys/src/mkfile  [15:29]
+<BurnZeZ> LIBS=`{echo lib*}
+<joe9> that is cool. Thanks for the tip.  [15:32]
+<joe9> I have to log off. I will be back later. Thanks a lot for sharing.  [15:35]
