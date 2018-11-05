@@ -5,10 +5,9 @@ P=autism
 LIB=lib$P.$O.a
 OFILES=\
 	efunc.$O \
-	sfunc.$O \
 	fdcp.$O \
 	fget.$O \
-	Bgetline.$O \
+
 
 HFILES=/sys/include/$P.h
 </sys/src/cmd/mksyslib

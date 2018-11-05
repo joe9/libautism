@@ -89,9 +89,6 @@ extern	long	fdcp(int, int, ulong, vlong, vlong*);
 int	esnprint(char *buf, int sz, const char *fmt, ...);
 char*	eseprint(char *buf, char *ebuf, const char *fmt, ...);
 
-/* string functions */
-String*	s_smprint(String * str, char *fmt, ...);
-
 /* below utilities from acme/wiki/src/util.c */
 char *estrstrdup(char *s, char *t);
 char *eappend(char *s, char *sep, char *t);
@@ -100,5 +97,3 @@ void error(char *fmt, ...);
 
 /* check grid/testdebug.c for details on why this is the best */
 #define D if (debug == 0) {} else fprint
-
-char * Bgetline(int debug, Biobufhdr * b, int *size);
