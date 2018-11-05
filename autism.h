@@ -44,9 +44,22 @@ typedef enum Bool Bool;
 #define DEL '\177'
 
 enum {
-	Kilo = 1024 * sizeof(uchar),
-	Mega = Kilo * Kilo,
+	KiB = 1024 * sizeof(uchar), /* kibi byte */
+	MiB = KiB * KiB, /* mebi byte */
 };
+
+typedef signed char s8;
+typedef signed short s16;
+typedef signed int s32;
+typedef signed long long s64;
+
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
+typedef unsigned long long u64;
+
+typedef float f32;
+typedef double f64;
 
 extern	int	erfork(int);
 extern	void*	emalloc(ulong);
