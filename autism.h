@@ -48,6 +48,7 @@ enum {
 	MiB = KiB * KiB, /* mebi byte */
 };
 
+/* below types from BurnZeZ's http://feline.systems/tmp/stype.h */
 typedef signed char s8;
 typedef signed short s16;
 typedef signed int s32;
