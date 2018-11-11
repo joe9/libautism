@@ -5,6 +5,8 @@
 
 #include "autism.h"
 
+extern char *argv0;
+
 int
 erfork(int flags)
 {
@@ -213,20 +215,36 @@ egrow(char *s, char *sep, char *t)
 	return s;
 }
 
+/* from disk/mkext.c, except for the abort() at the end */
+/* assumes argv0 is set */
+#pragma varargck argpos error 1
 void
 error(char *fmt, ...)
 {
-	int n;
+	char buf[1024];
 	va_list arg;
-	char buf[1024] = "";
 
+	sprint(buf, "%q: ", argv0);
 	va_start(arg, fmt);
-	n = vseprint(buf, buf + sizeof buf, fmt, arg) - buf;
+	vseprint(buf+strlen(buf), buf+sizeof(buf), fmt, arg);
 	va_end(arg);
-	write(2, buf, n);
-	write(2, "\n", 1);
-	/* threadexitsall(buf); */
+	fprint(2, "%s\n", buf);
+	/* exits(0); */
 	abort();
+}
+
+#pragma varargck argpos warn 1
+void
+warn(char *fmt, ...)
+{
+	char buf[1024];
+	va_list arg;
+
+	sprint(buf, "%q: ", argv0);
+	va_start(arg, fmt);
+	vseprint(buf+strlen(buf), buf+sizeof(buf), fmt, arg);
+	va_end(arg);
+	fprint(2, "%s\n", buf);
 }
 
 /* from spew of #cat-v
