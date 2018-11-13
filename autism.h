@@ -94,7 +94,9 @@ char*	eseprint(char *buf, char *ebuf, const char *fmt, ...);
 char *estrstrdup(char *s, char *t);
 char *eappend(char *s, char *sep, char *t);
 char *egrow(char *s, char *sep, char *t);
+
 void error(char *fmt, ...);
+void warn(char *fmt, ...);
 
 /* check grid/testdebug.c for details on why this is the best */
 #define D if (debug == 0) {} else fprint

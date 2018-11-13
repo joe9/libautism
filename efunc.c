@@ -224,7 +224,7 @@ error(char *fmt, ...)
 	char buf[1024];
 	va_list arg;
 
-	sprint(buf, "%q: ", argv0);
+	sprint(buf, "%s: ", argv0);
 	va_start(arg, fmt);
 	vseprint(buf+strlen(buf), buf+sizeof(buf), fmt, arg);
 	va_end(arg);
@@ -240,7 +240,7 @@ warn(char *fmt, ...)
 	char buf[1024];
 	va_list arg;
 
-	sprint(buf, "%q: ", argv0);
+	sprint(buf, "%s: ", argv0);
 	va_start(arg, fmt);
 	vseprint(buf+strlen(buf), buf+sizeof(buf), fmt, arg);
 	va_end(arg);
