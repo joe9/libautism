@@ -11,13 +11,13 @@ int
 erfork(int flags)
 {
 	int n;
+
 	if((n = rfork(flags)) < 0)
 		sysfatal("erfork: %r");
 	return n;
 }
 
-
-void*
+void *
 emalloc(ulong sz)
 {
 	void *v;
@@ -29,12 +29,12 @@ emalloc(ulong sz)
 	return v;
 }
 
-char*
+char *
 esmprint(char *fmt, ...)
 {
 	char *s;
 	va_list arg;
-	
+
 	va_start(arg, fmt);
 	s = vsmprint(fmt, arg);
 	va_end(arg);
@@ -43,7 +43,7 @@ esmprint(char *fmt, ...)
 	return s;
 }
 
-char*
+char *
 estrdup(char *s)
 {
 	char *p;
@@ -55,11 +55,11 @@ estrdup(char *s)
 	return p;
 }
 
-
 int
 eopen(char *s, int m)
 {
 	int fd;
+
 	if((fd = open(s, m)) < 0)
 		sysfatal("eopen: %r");
 
@@ -77,7 +77,6 @@ eseek(int fd, vlong n, int type)
 
 	return o;
 }
-
 
 double
 eatof(char *cp)
@@ -226,7 +225,7 @@ error(char *fmt, ...)
 
 	sprint(buf, "%s: ", argv0);
 	va_start(arg, fmt);
-	vseprint(buf+strlen(buf), buf+sizeof(buf), fmt, arg);
+	vseprint(buf + strlen(buf), buf + sizeof(buf), fmt, arg);
 	va_end(arg);
 	fprint(2, "%s\n", buf);
 	/* exits(0); */
@@ -242,7 +241,7 @@ warn(char *fmt, ...)
 
 	sprint(buf, "%s: ", argv0);
 	va_start(arg, fmt);
-	vseprint(buf+strlen(buf), buf+sizeof(buf), fmt, arg);
+	vseprint(buf + strlen(buf), buf + sizeof(buf), fmt, arg);
 	va_end(arg);
 	fprint(2, "%s\n", buf);
 }

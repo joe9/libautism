@@ -44,8 +44,8 @@ typedef enum Bool Bool;
 #define DEL '\177'
 
 enum {
-	KiB = 1024 * sizeof(uchar), /* kibi byte */
-	MiB = KiB * KiB, /* mebi byte */
+	KiB = 1024 * sizeof(uchar),     /* kibi byte */
+	MiB = KiB * KiB,        /* mebi byte */
 };
 
 /* below types from BurnZeZ's http://feline.systems/tmp/stype.h */
@@ -62,33 +62,35 @@ typedef unsigned long long u64;
 typedef float f32;
 typedef double f64;
 
-extern	int	erfork(int);
-extern	void*	emalloc(ulong);
-extern	char*	esmprint(char*, ...);
-extern	char*	estrdup(char*);
+extern int erfork(int);
+extern void *emalloc(ulong);
+extern char *esmprint(char *, ...);
+extern char *estrdup(char *);
+
 #pragma	varargck argpos esmprint 1
 
-extern	int	eopen(char*, int);
-extern	vlong	eseek(int, vlong, int);
+extern int eopen(char *, int);
+extern vlong eseek(int, vlong, int);
 
-extern	double	eatof(char*);
-extern	int	eatoi(char*);
-extern	long	eatol(char*);
-extern	vlong	eatoll(char*);
+extern double eatof(char *);
+extern int eatoi(char *);
+extern long eatol(char *);
+extern vlong eatoll(char *);
+
 /* extern	double	echarstod(int(*)(void*), void*);
  * not bothering with charstod */
-extern	double	estrtod(char*, char**);
-extern	long	estrtol(char*, char**, int);
-extern	ulong	estrtoul(char*, char**, int);
-extern	vlong	estrtoll(char*, char**, int);
-extern	uvlong	estrtoull(char*, char**, int);
+extern double estrtod(char *, char **);
+extern long estrtol(char *, char **, int);
+extern ulong estrtoul(char *, char **, int);
+extern vlong estrtoll(char *, char **, int);
+extern uvlong estrtoull(char *, char **, int);
 
-extern	void*	fget(int, ulong, int*);
-extern	long	fdcp(int, int, ulong, vlong, vlong*);
+extern void *fget(int, ulong, int *);
+extern long fdcp(int, int, ulong, vlong, vlong *);
 
 /* these 2 from spew of #cat-v */
-int	esnprint(char *buf, int sz, const char *fmt, ...);
-char*	eseprint(char *buf, char *ebuf, const char *fmt, ...);
+int esnprint(char *buf, int sz, const char *fmt, ...);
+char *eseprint(char *buf, char *ebuf, const char *fmt, ...);
 
 /* below utilities from acme/wiki/src/util.c */
 char *estrstrdup(char *s, char *t);

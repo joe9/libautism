@@ -5,7 +5,7 @@
 
 #include "autism.h"
 
-void*
+void *
 fget(int fd, ulong bs, int *p)
 {
 	char *a;
@@ -21,22 +21,22 @@ fget(int fd, ulong bs, int *p)
 		bs = r;
 
 	a = nil;
-	b=*p = 0;
-	for(i=0;; i++){
-		if(b-*p < r)
-			if((a = realloc(a, b+=bs)) == nil)
+	b = *p = 0;
+	for(i = 0;; i++) {
+		if(b - *p < r)
+			if((a = realloc(a, b += bs)) == nil)
 				return nil;
 
-		if((n = read(fd, a+*p, bs)) <= 0)
+		if((n = read(fd, a + *p, bs)) <= 0)
 			break;
 		*p += n;
 	}
 
-	if(*p == 0){
+	if(*p == 0) {
 		if(n < 0)
 			*p = -1;
 
-		if(a != nil){
+		if(a != nil) {
 			/* this should never be reached */
 			free(a);
 			a = nil;

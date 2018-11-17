@@ -52,4 +52,3 @@ Bgetline(int debug, Biobufhdr * b, int *size)
 	}
 	return nil;
 }
-
