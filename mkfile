@@ -5,6 +5,7 @@ P=autism
 LIB=lib$P.$O.a
 OFILES=\
 	efunc.$O \
+	round.$O \
 	fdcp.$O \
 	fget.$O \
 

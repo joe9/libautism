@@ -102,3 +102,5 @@ void warn(char *fmt, ...);
 
 /* check grid/testdebug.c for details on why this is the best */
 #define D if (debug == 0) {} else fprint
+
+double round(double x);
