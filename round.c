@@ -6,7 +6,7 @@
 #include "autism.h"
 
 /*
-07:28 < joe9> when n=410.00, and I do (unsigned long) of it, it is converting to 409 (probably to do with ieee). Any suggestions on how to correct that? 
+07:28 < joe9> when n=410.00, and I do (unsigned long) of it, it is converting to 409 (probably to do with ieee). Any suggestions on how to correct that?
 07:29 < joe9> this is with a C program native on 9front.
 07:29 < joe9> print("toquote: n=%f => %lud,%f\n", ja->val->first->val->n, (unsigned long) (ja->val->first->val->n * 100), (ja->val->first->val->n * 100));
 07:29 < joe9> n=4.100000 => 409,410.000000
@@ -39,7 +39,7 @@ round(double x)
 
 	if(isNaN(x) || isInf(x, 1) || isInf(x, -1))
 		return x;
-	f = modf(x, &i);	
+	f = modf(x, &i);
 	if(f <= -0.5)
 		i--;
 	else if(f >= 0.5)
@@ -59,7 +59,7 @@ round(double x)
 
 	if(isNaN(x) || isInf(x, 1) || isInf(x, -1))
 		return x;
-	f = modf(x, &i);	
+	f = modf(x, &i);
 	if(f <= -0.5)
 		i--;
 	else if(f >= 0.5)
