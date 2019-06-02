@@ -8,6 +8,7 @@ OFILES=\
 	round.$O \
 	fdcp.$O \
 	fget.$O \
+	env.$O \
 
 
 HFILES=/sys/include/$P.h

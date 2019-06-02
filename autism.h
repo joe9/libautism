@@ -104,3 +104,8 @@ void warn(char *fmt, ...);
 #define D if (debug == 0) {} else fprint
 
 double round(double x);
+
+/* from env.c */
+char *readfile(char*);
+void setenv(char*, char*);
+void cpenv(char*, char*);
