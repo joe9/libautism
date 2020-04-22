@@ -5,11 +5,11 @@
 
 #include "autism.h"
 
-long
-fdcp(int fd, int ofd, ulong bs, vlong bn, vlong * bw)
+s32
+fdcp(s32 fd, s32 ofd, u32 bs, s64 bn, s64 * bw)
 {
-	uchar *buf;
-	int n;
+	u8 *buf;
+	s32 n;
 
 	if(bn == 0) {
 		werrstr("can't write 0 bytes");

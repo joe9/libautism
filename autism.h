@@ -62,43 +62,43 @@ typedef unsigned long long u64;
 typedef float f32;
 typedef double f64;
 
-extern int erfork(int);
-extern void *emalloc(ulong);
-extern char *esmprint(char *, ...);
-extern char *estrdup(char *);
+extern s32 erfork(s32);
+extern void *emalloc(u32);
+extern s8 *esmprint(s8 *, ...);
+extern s8 *estrdup(s8 *);
 
 #pragma	varargck argpos esmprint 1
 
-extern int eopen(char *, int);
-extern vlong eseek(int, vlong, int);
+extern s32 eopen(s8 *, s32);
+extern s64 eseek(s32, s64, s32);
 
-extern double eatof(char *);
-extern int eatoi(char *);
-extern long eatol(char *);
-extern vlong eatoll(char *);
+extern double eatof(s8 *);
+extern s32 eatoi(s8 *);
+extern s32 eatol(s8 *);
+extern s64 eatoll(s8 *);
 
 /* extern	double	echarstod(int(*)(void*), void*);
  * not bothering with charstod */
-extern double estrtod(char *, char **);
-extern long estrtol(char *, char **, int);
-extern ulong estrtoul(char *, char **, int);
-extern vlong estrtoll(char *, char **, int);
-extern uvlong estrtoull(char *, char **, int);
+extern double estrtod(s8 *, s8 **);
+extern s32 estrtol(s8 *, s8 **, int);
+extern u32 estrtoul(s8 *, s8 **, int);
+extern s64 estrtoll(s8 *, s8 **, int);
+extern u64 estrtoull(s8 *, s8 **, int);
 
-extern void *fget(int, ulong, int *);
-extern long fdcp(int, int, ulong, vlong, vlong *);
+extern void *fget(int, u32, int *);
+extern s32 fdcp(int, int, u32, s64, s64 *);
 
 /* these 2 from spew of #cat-v */
-int esnprint(char *buf, int sz, const char *fmt, ...);
-char *eseprint(char *buf, char *ebuf, const char *fmt, ...);
+int esnprint(s8 *buf, int sz, const s8 *fmt, ...);
+s8 *eseprint(s8 *buf, s8 *ebuf, const s8 *fmt, ...);
 
 /* below utilities from acme/wiki/src/util.c */
-char *estrstrdup(char *s, char *t);
-char *eappend(char *s, char *sep, char *t);
-char *egrow(char *s, char *sep, char *t);
+s8 *estrstrdup(s8 *s, s8 *t);
+s8 *eappend(s8 *s, s8 *sep, s8 *t);
+s8 *egrow(s8 *s, s8 *sep, s8 *t);
 
-void error(char *fmt, ...);
-void warn(char *fmt, ...);
+void error(s8 *fmt, ...);
+void warn(s8 *fmt, ...);
 
 /* check grid/testdebug.c for details on why this is the best */
 #define D if (debug == 0) {} else fprint
@@ -106,6 +106,6 @@ void warn(char *fmt, ...);
 double round(double x);
 
 /* from env.c */
-char *readfile(char*);
-void setenv(char*, char*);
-void cpenv(char*, char*);
+s8 *readfile(s8*);
+void setenv(s8*, s8*);
+void cpenv(s8*, s8*);

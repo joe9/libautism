@@ -5,12 +5,12 @@
 
 #include "autism.h"
 
-extern char *argv0;
+extern s8 *argv0;
 
-int
+s32
 erfork(int flags)
 {
-	int n;
+	s32 n;
 
 	if((n = rfork(flags)) < 0)
 		sysfatal("erfork: %r");
@@ -29,10 +29,10 @@ emalloc(ulong sz)
 	return v;
 }
 
-char *
-esmprint(char *fmt, ...)
+s8 *
+esmprint(s8 *fmt, ...)
 {
-	char *s;
+	s8 *s;
 	va_list arg;
 
 	va_start(arg, fmt);
@@ -43,10 +43,10 @@ esmprint(char *fmt, ...)
 	return s;
 }
 
-char *
-estrdup(char *s)
+s8 *
+estrdup(s8 *s)
 {
-	char *p;
+	s8 *p;
 
 	p = strdup(s);
 	if(p == nil)
@@ -55,10 +55,10 @@ estrdup(char *s)
 	return p;
 }
 
-int
-eopen(char *s, int m)
+s32
+eopen(s8 *s, s32 m)
 {
-	int fd;
+	s32 fd;
 
 	if((fd = open(s, m)) < 0)
 		sysfatal("eopen: %r");
@@ -66,10 +66,10 @@ eopen(char *s, int m)
 	return fd;
 }
 
-vlong
-eseek(int fd, vlong n, int type)
+s64
+eseek(int fd, s64 n, s32 type)
 {
-	vlong o;
+	s64 o;
 
 	o = seek(fd, n, type);
 	if(o < 0)
@@ -79,34 +79,34 @@ eseek(int fd, vlong n, int type)
 }
 
 double
-eatof(char *cp)
+eatof(s8 *cp)
 {
 	return estrtod(cp, 0);
 }
 
-int
-eatoi(char *s)
+s32
+eatoi(s8 *s)
 {
 	return estrtol(s, nil, 10);
 }
 
-long
-eatol(char *s)
+s32
+eatol(s8 *s)
 {
 	return estrtol(s, nil, 10);
 }
 
-vlong
-eatoll(char *s)
+s64
+eatoll(s8 *s)
 {
 	return estrtoll(s, nil, 10);
 }
 
 double
-estrtod(char *as, char **aas)
+estrtod(s8 *as, s8 **aas)
 {
 	double n;
-	char *p;
+	s8 *p;
 
 	n = strtod(as, &p);
 	if(p == as)
@@ -117,11 +117,11 @@ estrtod(char *as, char **aas)
 	return n;
 }
 
-long
-estrtol(char *as, char **aas, int base)
+s32
+estrtol(s8 *as, s8 **aas, s32 base)
 {
 	long n;
-	char *p;
+	s8 *p;
 
 	n = strtol(as, &p, base);
 	if(p == as)
@@ -132,11 +132,11 @@ estrtol(char *as, char **aas, int base)
 	return n;
 }
 
-ulong
-estrtoul(char *as, char **aas, int base)
+u32
+estrtoul(s8 *as, s8 **aas, s32 base)
 {
 	ulong n;
-	char *p;
+	s8 *p;
 
 	n = strtoul(as, &p, base);
 	if(p == as)
@@ -147,11 +147,11 @@ estrtoul(char *as, char **aas, int base)
 	return n;
 }
 
-vlong
-estrtoll(char *as, char **aas, int base)
+s64
+estrtoll(s8 *as, s8 **aas, s32 base)
 {
-	vlong n;
-	char *p;
+	s64 n;
+	s8 *p;
 
 	n = strtoll(as, &p, base);
 	if(p == as)
@@ -162,11 +162,11 @@ estrtoll(char *as, char **aas, int base)
 	return n;
 }
 
-uvlong
-estrtoull(char *as, char **aas, int base)
+u64
+estrtoull(s8 *as, s8 **aas, s32 base)
 {
 	uvlong n;
-	char *p;
+	s8 *p;
 
 	n = strtoull(as, &p, base);
 	if(p == as)
@@ -179,20 +179,20 @@ estrtoull(char *as, char **aas, int base)
 
 /* below utilities from acme/wiki/src/util.c */
 
-char *
-estrstrdup(char *s, char *t)
+s8 *
+estrstrdup(s8 *s, s8 *t)
 {
-	char *u = emalloc(strlen(s) + strlen(t) + 1);
+	s8 *u = emalloc(strlen(s) + strlen(t) + 1);
 
 	strcpy(u, s);
 	strcat(u, t);
 	return u;
 }
 
-char *
-eappend(char *s, char *sep, char *t)
+s8 *
+eappend(s8 *s, s8 *sep, s8 *t)
 {
-	char *u;
+	s8 *u;
 
 	if(t == nil)
 		u = estrstrdup(s, sep);
@@ -206,8 +206,8 @@ eappend(char *s, char *sep, char *t)
 	return u;
 }
 
-char *
-egrow(char *s, char *sep, char *t)
+s8 *
+egrow(s8 *s, s8 *sep, s8 *t)
 {
 	s = eappend(s, sep, t);
 	free(t);
@@ -218,9 +218,9 @@ egrow(char *s, char *sep, char *t)
 /* assumes argv0 is set */
 #pragma varargck argpos error 1
 void
-error(char *fmt, ...)
+error(s8 *fmt, ...)
 {
-	char buf[1024];
+	s8 buf[1024];
 	va_list arg;
 
 	sprint(buf, "%s: ", argv0);
@@ -234,9 +234,9 @@ error(char *fmt, ...)
 
 #pragma varargck argpos warn 1
 void
-warn(char *fmt, ...)
+warn(s8 *fmt, ...)
 {
-	char buf[1024];
+	s8 buf[1024];
 	va_list arg;
 
 	sprint(buf, "%s: ", argv0);
@@ -249,7 +249,7 @@ warn(char *fmt, ...)
 /* from spew of #cat-v
    usage of esnprintf:
 static size_t
-fmtGuardRecursive(char *buf, size_t sz, Node *g, struct GuardFmt *gfmt)
+fmtGuardRecursive(s8 *buf, size_t sz, Node *g, struct GuardFmt *gfmt)
 {
     size_t r;
 
@@ -284,10 +284,10 @@ fmtGuardRecursive(char *buf, size_t sz, Node *g, struct GuardFmt *gfmt)
     return r;
 }
  */
-int
-esnprint(char *buf, int sz, const char *fmt, ...)
+s32
+esnprint(s8 *buf, s32 sz, const s8 *fmt, ...)
 {
-	int r;
+	s32 r;
 	va_list va;
 
 	if(sz <= 0)
@@ -301,10 +301,10 @@ esnprint(char *buf, int sz, const char *fmt, ...)
 	return r;
 }
 
-char *
-eseprint(char *buf, char *ebuf, const char *fmt, ...)
+s8 *
+eseprint(s8 *buf, s8 *ebuf, const s8 *fmt, ...)
 {
-	char *r;
+	s8 *r;
 	va_list va;
 
 	if(buf >= ebuf)
