@@ -48,7 +48,31 @@ enum {
 	MiB = KiB * KiB,        /* mebi byte */
 };
 
-/* below types from BurnZeZ's http://feline.systems/tmp/stype.h */
+/* below types from BurnZeZ's http://feline.systems/tmp/stype.h
+Size of Boolean type is 1 byte(s)
+
+Number of bits in a character: 8
+Size of character types is 1 byte
+Signed char min: -128 max: 127
+Unsigned char min: 0 max: 255
+Default char is unsigned
+
+Size of short int types is 2 bytes
+Signed short min: -32768 max: 32767
+Unsigned short min: 0 max: 65535
+
+Size of int types is 4 bytes
+Signed int min: -2147483648 max: 2147483647
+Unsigned int min: 0 max: 4294967295
+
+Size of long int types is 4 bytes
+Signed long min: -2147483648 max: 2147483647
+Unsigned long min: 0 max: 4294967295
+
+Size of long long types is 8 bytes
+Signed long long min: -9223372036854775808 max: 9223372036854775807
+Unsigned long long min: 0 max: 18446744073709551615
+ */
 typedef signed char s8;
 typedef signed short s16;
 typedef signed int s32;
